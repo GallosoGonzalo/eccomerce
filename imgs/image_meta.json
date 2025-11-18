@@ -1,0 +1,407 @@
+[
+  {
+    "query": "Smartwatch on white background for product page",
+    "image_info": {
+      "url": "https://www.apple.com/newsroom/images/product/watch/standard/Apple-Watch-S8-2up-hero-220907.jpg.landing-big_2x.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 90962,
+      "width": 1312,
+      "height": 738,
+      "total_pixels": 968256,
+      "basic_score": 0.9313572913316067,
+      "file_name": "smartwatch_9.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Smartwatch on white background for product page",
+    "image_info": {
+      "url": "https://www.colmi.info/cdn/shop/files/COLMIV72SmartWatchgrayside.jpg?v=1714102199&width=1445",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 106991,
+      "width": 1000,
+      "height": 1000,
+      "total_pixels": 1000000,
+      "basic_score": 0.927670599882417,
+      "file_name": "smartwatch_6.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Smartwatch on white background for product page",
+    "image_info": {
+      "url": "https://www.apple.com/newsroom/images/product/watch/standard/Apple_delivers-apple-watch-series-6_09152020_big.jpg.large.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 93283,
+      "width": 980,
+      "height": 845,
+      "total_pixels": 828100,
+      "basic_score": 0.9134544956360307,
+      "file_name": "smartwatch_5.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Smartphone on white background for ecommerce",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/61pqlcA2qeL.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 65919,
+      "width": 1001,
+      "height": 1001,
+      "total_pixels": 1002001,
+      "basic_score": 0.9236001613201699,
+      "file_name": "smartphone_7.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Smartphone on white background for ecommerce",
+    "image_info": {
+      "url": "https://s47295.pcdn.co/wp-content/uploads/2024/04/a15_a25-5g-front_back_product-lockup-900x450.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 50350,
+      "width": 900,
+      "height": 450,
+      "total_pixels": 405000,
+      "basic_score": 0.8099391363744031,
+      "file_name": "smartphone_4.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Smartphone on white background for ecommerce",
+    "image_info": {
+      "url": "https://cdn.mos.cms.futurecdn.net/Ts9g2aqxd2fdnYNz9WHKVU.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 46180,
+      "width": 488,
+      "height": 488,
+      "total_pixels": 238144,
+      "basic_score": 0.7664486873854833,
+      "file_name": "smartphone_8.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern sneakers on white background",
+    "image_info": {
+      "url": "https://thursdayboots.com/cdn/shop/files/1024x1024-Men-Premier-LowTop-White-BlindEyelets-121423-3.4_2_3615bf9d-be8c-4f08-a54e-f6a5b91208ca_1024x1024.jpg?v=1705532975",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 39155,
+      "width": 1024,
+      "height": 1024,
+      "total_pixels": 1048576,
+      "basic_score": 0.9205215984637095,
+      "file_name": "sneakers_1.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern sneakers on white background",
+    "image_info": {
+      "url": "https://thursdayboots.com/cdn/shop/files/1024x1024-Court-White-040324-3.4_7f15fec3-6e8d-4678-844e-53bf8648dac7_1024x1024.jpg?v=1721774143",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 37719,
+      "width": 1024,
+      "height": 1024,
+      "total_pixels": 1048576,
+      "basic_score": 0.9203741654894118,
+      "file_name": "sneakers_5.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern sneakers on white background",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/51ft6aQDZLL._AC_UY900_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 42689,
+      "width": 900,
+      "height": 900,
+      "total_pixels": 810000,
+      "basic_score": 0.9097022564277586,
+      "file_name": "sneakers_0.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Professional camera on white background",
+    "image_info": {
+      "url": "https://graphicdesigneye.com/images/Nikon-D850.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 71611,
+      "width": 1200,
+      "height": 750,
+      "total_pixels": 900000,
+      "basic_score": 0.9237713089148296,
+      "file_name": "camera_7.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Professional camera on white background",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/91OkcsKMzhL._AC_UF894,1000_QL80_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 139542,
+      "width": 894,
+      "height": 899,
+      "total_pixels": 803706,
+      "basic_score": 0.9187975879261848,
+      "file_name": "camera_1.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Professional camera on white background",
+    "image_info": {
+      "url": "https://imaging.nikon.com/imaging/lineup/dslr/img/product_d780.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 174227,
+      "width": 1000,
+      "height": 616,
+      "total_pixels": 616000,
+      "basic_score": 0.8895540637547308,
+      "file_name": "camera_4.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Backpack on white background for product showcase",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/71oltN1lRLL._AC_UY1000_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 141538,
+      "width": 989,
+      "height": 1000,
+      "total_pixels": 989000,
+      "basic_score": 0.930459907365324,
+      "file_name": "backpack_7.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Backpack on white background for product showcase",
+    "image_info": {
+      "url": "https://i.ebayimg.com/images/g/Q24AAOSwotFigUHc/s-l1200.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 218240,
+      "width": 754,
+      "height": 1200,
+      "total_pixels": 904800,
+      "basic_score": 0.9113490541772847,
+      "file_name": "backpack_8.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Backpack on white background for product showcase",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/71q58yQLS5L._AC_UY1000_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 70115,
+      "width": 817,
+      "height": 1000,
+      "total_pixels": 817000,
+      "basic_score": 0.9007847612966197,
+      "file_name": "backpack_3.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Men's t-shirt on white background for ecommerce",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/61cETX3bw9L._AC_UY1000_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 53770,
+      "width": 1000,
+      "height": 1000,
+      "total_pixels": 1000000,
+      "basic_score": 0.9223526438292738,
+      "file_name": "tshirt_2.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Men's t-shirt on white background for ecommerce",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/B1pppR4gVKL._CLa%7C2140%2C2000%7C61D8N6mfy3L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_UY1000_.png",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 43258,
+      "width": 984,
+      "height": 1000,
+      "total_pixels": 984000,
+      "basic_score": 0.9204396783991425,
+      "file_name": "tshirt_7.png"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Men's t-shirt on white background for ecommerce",
+    "image_info": {
+      "url": "https://cdn9.bigcommerce.com/s-e6hs92zf/products/764/images/5916/Solid-Mens-Olive__43913.1706036536.1280.1280.gif?c=2",
+      "img_format": "GIF",
+      "mode": "P",
+      "file_size": 546277,
+      "width": 1200,
+      "height": 1200,
+      "total_pixels": 1440000,
+      "basic_score": 0.8685444300901757,
+      "file_name": "tshirt_3.gif"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern laptop computer on white background for product showcase",
+    "image_info": {
+      "url": "https://img.freepik.com/free-photo/view-electronic-product-balancing-podium_23-2150141319.jpg?semt=ais_hybrid&w=740&q=80",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 49577,
+      "width": 740,
+      "height": 949,
+      "total_pixels": 702260,
+      "basic_score": 0.8851506549462189,
+      "file_name": "laptop_8.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern laptop computer on white background for product showcase",
+    "image_info": {
+      "url": "https://static.vecteezy.com/system/resources/thumbnails/057/520/164/small_2x/computer-laptop-with-blank-screen-computer-with-blank-display-laptop-front-view-on-white-background-modern-computer-hardware-user-interface-demo-vector.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 14393,
+      "width": 700,
+      "height": 700,
+      "total_pixels": 490000,
+      "basic_score": 0.8437667374979347,
+      "file_name": "laptop_7.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Modern laptop computer on white background for product showcase",
+    "image_info": {
+      "url": "https://media.istockphoto.com/id/1139493113/vector/black-laptop-with-white-monitor-vector.jpg?s=612x612&w=0&k=20&c=-dMyJaIBvqhtLcemuC4O-D2x-HE7xZGqeDM6J67oGwo=",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 11606,
+      "width": 612,
+      "height": 612,
+      "total_pixels": 374544,
+      "basic_score": 0.8090434262769648,
+      "file_name": "laptop_2.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Wireless headphones on white background",
+    "image_info": {
+      "url": "http://avantree.com/cdn/shop/files/opera-plus-m1-product-img-web_a246be27-383f-4fa2-b8b9-531f5ab39d90.png?v=1719888337",
+      "img_format": "PNG",
+      "mode": "RGBA",
+      "file_size": 281038,
+      "width": 1024,
+      "height": 1024,
+      "total_pixels": 1048576,
+      "basic_score": 0.9325747807490699,
+      "file_name": "headphones_4.png"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Wireless headphones on white background",
+    "image_info": {
+      "url": "https://d1ncau8tqf99kp.cloudfront.net/converted/110590_original_local_1200x1050_v3_converted.webp",
+      "img_format": "WEBP",
+      "mode": "RGBA",
+      "file_size": 39018,
+      "width": 1200,
+      "height": 1050,
+      "total_pixels": 1260000,
+      "basic_score": 0.9140548813137985,
+      "file_name": "headphones_6.webp"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Wireless headphones on white background",
+    "image_info": {
+      "url": "https://usa.1more.com/cdn/shop/files/1MORE-SonoFlow-Wireless-Active-Noise-Cancelling-Headphones-Product-vendor-100425540.webp?v=1736993834&width=1100",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 50110,
+      "width": 1100,
+      "height": 1100,
+      "total_pixels": 1210000,
+      "basic_score": 0.9111321018827131,
+      "file_name": "headphones_3.webp"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Coffee maker on white background",
+    "image_info": {
+      "url": "https://m.media-amazon.com/images/I/81ydPj9FjlL._AC_UF894,1000_QL80_.jpg",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 95100,
+      "width": 894,
+      "height": 931,
+      "total_pixels": 832314,
+      "basic_score": 0.9159889459644807,
+      "file_name": "coffee_maker_1.jpg"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Coffee maker on white background",
+    "image_info": {
+      "url": "https://us.moccamaster.com/cdn/shop/products/MoccaMaster_Set_53933_KBGV_OffWhite_3605-01-214056_1200x.png?v=1752176783",
+      "img_format": "PNG",
+      "mode": "P",
+      "file_size": 452098,
+      "width": 1200,
+      "height": 1200,
+      "total_pixels": 1440000,
+      "basic_score": 0.8943765949500933,
+      "file_name": "coffee_maker_9.png"
+    },
+    "llm_score": null
+  },
+  {
+    "query": "Coffee maker on white background",
+    "image_info": {
+      "url": "https://www.selectbrands.com/cdn/shop/files/cm-001po.10__17673.1699031949.1280.1280.jpg?v=1725980552&width=1280",
+      "img_format": "JPEG",
+      "mode": "RGB",
+      "file_size": 208405,
+      "width": 1280,
+      "height": 1280,
+      "total_pixels": 1638400,
+      "basic_score": 0.83932438372039,
+      "file_name": "coffee_maker_7.jpg"
+    },
+    "llm_score": null
+  }
+]
