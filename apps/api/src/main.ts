@@ -2,11 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as bodyParser from 'body-parser';
+import { raw } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  app.use('/payments/webhook', bodyParser.raw({ type: 'application/json' }));
+  app.use('/payments/webhook', raw({ type: 'application/json' }));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -16,7 +16,8 @@ export class OrdersService {
     }
 
     const total = cart.items.reduce(
-      (acc, item) => acc + item.product.price * item.quantity,
+      (acc: number, item: any) =>
+        acc + item.product.price.toNumber() * item.quantity,
       0
     );
 
@@ -26,10 +27,10 @@ export class OrdersService {
         status: 'pending',
         total,
         items: {
-          create: cart.items.map((item) => ({
+          create: cart.items.map((item: any) => ({
             productId: item.productId,
             quantity: item.quantity,
-            unitPrice: item.product.price
+            unitPrice: item.product.price.toNumber()
           }))
         }
       },

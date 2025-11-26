@@ -24,7 +24,7 @@ export class PaymentsService {
     }
 
     const intent = await this.stripe.paymentIntents.create({
-      amount: Math.round(order.total * 100),
+      amount: Math.round(order.total.toNumber() * 100),
       currency: 'usd',
       metadata: { orderId },
       automatic_payment_methods: { enabled: true }
