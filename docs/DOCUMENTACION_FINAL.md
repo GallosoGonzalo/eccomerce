@@ -7,13 +7,11 @@
 
 ### ✅ Funcionalidades Implementadas y Verificadas
 
-#### Backend (Supabase)
-- ✅ Base de datos completa con 8 tablas
-- ✅ 8 categorías de productos
-- ✅ 24 productos con imágenes reales
-- ✅ Foreign keys configuradas para integridad referencial
-- ✅ RLS policies para seguridad
-- ✅ Edge functions creadas (seed-data, create-payment-intent, confirm-payment)
+#### Backend (NestJS + Prisma)
+- ✅ API consolidada en `apps/api` con módulos de catálogo, carrito, órdenes y pagos
+- ✅ Base de datos Postgres gestionada con Prisma (8 categorías y 24 productos seed)
+- ✅ JWT local con guardias de roles y validación centralizada
+- ✅ Endpoints listos para catálogo público y flujos autenticados de carrito/órdenes
 
 #### Frontend (React + TypeScript + TailwindCSS)
 - ✅ Sistema de diseño azul inspirado en MercadoPago
@@ -49,27 +47,22 @@
 ### ⏳ Pendiente de Implementación
 
 #### Pasarela de Pago (Stripe)
-**Estado**: Edge functions creadas, pendiente credenciales
-
-**Archivos creados**:
-- `/workspace/supabase/functions/create-payment-intent/index.ts`
-- `/workspace/supabase/functions/confirm-payment/index.ts`
+**Estado**: Módulo de pagos en NestJS listo para credenciales
 
 **Necesita**:
 - `STRIPE_SECRET_KEY`: Clave secreta de Stripe (backend)
 - `STRIPE_PUBLISHABLE_KEY`: Clave pública de Stripe (frontend)
+- `STRIPE_WEBHOOK_SECRET`: Secreto del webhook para `/payments/webhook`
 
 **Pasos para activar Stripe**:
 1. Obtener credenciales de Stripe
-2. Configurar variables de entorno en Supabase
-3. Desplegar edge functions: `create-payment-intent` y `confirm-payment`
-4. Actualizar CheckoutPage para usar Stripe Elements
-5. Probar flujo completo de pago
+2. Configurar variables de entorno en el backend (`apps/api`)
+3. Probar `POST /payments/create-intent` y webhook local
+4. Actualizar CheckoutPage para usar Stripe Elements si se requiere captura en frontend
 
-**Función actual del checkout**: 
-- Mock básico que crea la orden en la base de datos
-- NO procesa pagos reales
-- Necesita integración con Stripe para ser funcional
+**Función actual del checkout**:
+- Crea la orden en la base de datos usando el carrito autenticado
+- NO procesa pagos reales hasta configurar Stripe
 
 ### 📋 Testing Realizado
 

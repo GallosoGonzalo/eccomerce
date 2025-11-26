@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { supabase, Product } from '@/lib/supabase'
-import { useCart } from '@/contexts/CartContext'
 import { ShoppingCart, Minus, Plus, ChevronLeft, Package, Shield, Truck } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { fetchProductBySlug } from '@/lib/api'
+import type { Product } from '@/lib/types'
 
 export function ProductDetailPage() {
   const { slug } = useParams()
@@ -17,14 +18,9 @@ export function ProductDetailPage() {
   }, [slug])
 
   const loadProduct = async () => {
+    if (!slug) return
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('slug', slug)
-        .single()
-
-      if (error) throw error
+      const data = await fetchProductBySlug(slug)
       setProduct(data)
     } catch (error) {
       console.error('Error loading product:', error)
@@ -67,10 +63,7 @@ export function ProductDetailPage() {
     )
   }
 
-  const hasDiscount = product.original_price && product.original_price > product.price
-  const discountPercent = hasDiscount
-    ? Math.round(((product.original_price! - product.price) / product.price) * 100)
-    : 0
+  const image = product.images?.[0] ?? '/placeholder.jpg'
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -84,7 +77,7 @@ export function ProductDetailPage() {
         {/* Image */}
         <div className="bg-gray-100 rounded-lg p-8">
           <img
-            src={product.image_url || '/placeholder.jpg'}
+            src={image}
             alt={product.name}
             className="w-full h-auto object-contain max-h-96"
           />
@@ -100,16 +93,6 @@ export function ProductDetailPage() {
               <span className="text-4xl font-bold text-gray-900">
                 ${product.price.toLocaleString()}
               </span>
-              {hasDiscount && (
-                <>
-                  <span className="text-xl text-gray-500 line-through">
-                    ${product.original_price!.toLocaleString()}
-                  </span>
-                  <span className="bg-success text-white px-2 py-1 rounded text-sm font-bold">
-                    -{discountPercent}% OFF
-                  </span>
-                </>
-              )}
             </div>
           </div>
 

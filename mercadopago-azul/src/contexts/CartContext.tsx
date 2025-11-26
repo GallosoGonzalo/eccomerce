@@ -1,9 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { supabase, Cart, CartItem, Product } from '@/lib/supabase'
+import {
+  addCartItem,
+  clearCartItems,
+  fetchCart,
+  fetchProductById,
+  removeCartItem,
+  updateCartItem
+} from '@/lib/api'
+import type { CartItem } from '@/lib/types'
 import { useAuth } from './AuthContext'
 
 interface CartContextType {
-  cart: Cart | null
   items: CartItem[]
   itemCount: number
   total: number
@@ -15,221 +22,150 @@ interface CartContextType {
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
+const GUEST_CART_KEY = 'mp_guest_cart'
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth()
-  const [cart, setCart] = useState<Cart | null>(null)
+  const { token } = useAuth()
   const [items, setItems] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [migrated, setMigrated] = useState(false)
 
-  // Obtener o crear sesión de carrito
-  const getSessionId = () => {
-    let sessionId = localStorage.getItem('cart_session_id')
-    if (!sessionId) {
-      sessionId = crypto.randomUUID()
-      localStorage.setItem('cart_session_id', sessionId)
+  useEffect(() => {
+    if (token) {
+      migrateGuestCart()
+    } else {
+      loadGuestCart()
     }
-    return sessionId
+  }, [token])
+
+  const loadGuestCart = () => {
+    const stored = localStorage.getItem(GUEST_CART_KEY)
+    if (stored) {
+      setItems(JSON.parse(stored))
+    } else {
+      setItems([])
+    }
+    setLoading(false)
   }
 
-  // Cargar carrito
-  useEffect(() => {
-    loadCart()
-  }, [user])
+  const saveGuestCart = (data: CartItem[]) => {
+    setItems(data)
+    localStorage.setItem(GUEST_CART_KEY, JSON.stringify(data))
+  }
 
-  const loadCart = async () => {
+  const migrateGuestCart = async () => {
+    setLoading(true)
     try {
-      setLoading(true)
-      
-      let query = supabase
-        .from('carts')
-        .select('*')
-        .eq('status', 'active')
-
-      if (user) {
-        query = query.eq('user_id', user.id)
-      } else {
-        const sessionId = getSessionId()
-        query = query.eq('session_id', sessionId)
+      if (!migrated) {
+        const stored = localStorage.getItem(GUEST_CART_KEY)
+        if (stored) {
+          const guestItems: CartItem[] = JSON.parse(stored)
+          for (const item of guestItems) {
+            await addCartItem(item.productId, item.quantity)
+          }
+          localStorage.removeItem(GUEST_CART_KEY)
+          setMigrated(true)
+        }
       }
-
-      const { data: cartData, error: cartError } = await query.single()
-
-      if (cartError && cartError.code !== 'PGRST116') {
-        throw cartError
-      }
-
-      if (cartData) {
-        setCart(cartData)
-        await loadCartItems(cartData.id)
-      } else {
-        setItems([])
-      }
+      await refreshRemoteCart()
     } catch (error) {
-      console.error('Error loading cart:', error)
+      console.error('Error loading cart', error)
       setItems([])
     } finally {
       setLoading(false)
     }
   }
 
-  const loadCartItems = async (cartId: string) => {
-    const { data, error } = await supabase
-      .from('cart_items')
-      .select(`
-        *,
-        product:products(*)
-      `)
-      .eq('cart_id', cartId)
-
-    if (error) {
-      console.error('Error loading cart items:', error)
-      setItems([])
-    } else {
-      setItems(data || [])
-    }
-  }
-
-  const createCart = async () => {
-    const cartData: any = {
-      status: 'active',
-    }
-
-    if (user) {
-      cartData.user_id = user.id
-    } else {
-      cartData.session_id = getSessionId()
-    }
-
-    const { data, error } = await supabase
-      .from('carts')
-      .insert(cartData)
-      .select()
-      .single()
-
-    if (error) throw error
-    
-    setCart(data)
-    return data
+  const refreshRemoteCart = async () => {
+    const cart = await fetchCart()
+    setItems(cart?.items ?? [])
   }
 
   const addToCart = async (productId: string, quantity: number) => {
-    try {
-      let currentCart = cart
-      if (!currentCart) {
-        currentCart = await createCart()
-      }
+    if (!token) {
+      const product = await fetchProductById(productId)
+      if (!product) throw new Error('Producto no encontrado')
 
-      // Obtener precio del producto
-      const { data: product, error: productError } = await supabase
-        .from('products')
-        .select('price')
-        .eq('id', productId)
-        .single()
-
-      if (productError) throw productError
-
-      // Verificar si el producto ya está en el carrito
-      const existingItem = items.find(item => item.product_id === productId)
-
-      if (existingItem) {
-        await updateQuantity(existingItem.id, existingItem.quantity + quantity)
+      const existing = items.find(item => item.productId === productId)
+      if (existing) {
+        const updated = items.map(item =>
+          item.id === existing.id ? { ...item, quantity: item.quantity + quantity } : item
+        )
+        saveGuestCart(updated)
       } else {
-        const { data, error } = await supabase
-          .from('cart_items')
-          .insert({
-            cart_id: currentCart.id,
-            product_id: productId,
-            quantity,
-            price: product.price,
-          })
-          .select(`
-            *,
-            product:products(*)
-          `)
-          .single()
-
-        if (error) throw error
-        setItems([...items, data])
+        const newItems = [
+          ...items,
+          { id: crypto.randomUUID(), productId, quantity, product }
+        ]
+        saveGuestCart(newItems)
       }
-    } catch (error) {
-      console.error('Error adding to cart:', error)
-      throw error
+      return
     }
+
+    await addCartItem(productId, quantity)
+    await refreshRemoteCart()
   }
 
   const updateQuantity = async (itemId: string, quantity: number) => {
-    try {
+    if (!token) {
       if (quantity <= 0) {
         await removeItem(itemId)
         return
       }
-
-      const { error } = await supabase
-        .from('cart_items')
-        .update({ quantity })
-        .eq('id', itemId)
-
-      if (error) throw error
-
-      setItems(items.map(item => 
+      const updated = items.map(item =>
         item.id === itemId ? { ...item, quantity } : item
-      ))
-    } catch (error) {
-      console.error('Error updating quantity:', error)
-      throw error
+      )
+      saveGuestCart(updated)
+      return
     }
+
+    if (quantity <= 0) {
+      await removeItem(itemId)
+      return
+    }
+
+    await updateCartItem(itemId, quantity)
+    await refreshRemoteCart()
   }
 
   const removeItem = async (itemId: string) => {
-    try {
-      const { error } = await supabase
-        .from('cart_items')
-        .delete()
-        .eq('id', itemId)
-
-      if (error) throw error
-
-      setItems(items.filter(item => item.id !== itemId))
-    } catch (error) {
-      console.error('Error removing item:', error)
-      throw error
+    if (!token) {
+      const remaining = items.filter(item => item.id !== itemId)
+      saveGuestCart(remaining)
+      return
     }
+
+    await removeCartItem(itemId)
+    await refreshRemoteCart()
   }
 
   const clearCart = async () => {
-    try {
-      if (!cart) return
-
-      const { error } = await supabase
-        .from('cart_items')
-        .delete()
-        .eq('cart_id', cart.id)
-
-      if (error) throw error
-
+    if (!token) {
+      localStorage.removeItem(GUEST_CART_KEY)
       setItems([])
-    } catch (error) {
-      console.error('Error clearing cart:', error)
-      throw error
+      return
     }
+
+    await clearCartItems()
+    await refreshRemoteCart()
   }
 
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const total = items.reduce((sum, item) => sum + item.quantity * item.product.price, 0)
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      items,
-      itemCount,
-      total,
-      loading,
-      addToCart,
-      updateQuantity,
-      removeItem,
-      clearCart,
-    }}>
+    <CartContext.Provider
+      value={{
+        items,
+        itemCount,
+        total,
+        loading,
+        addToCart,
+        updateQuantity,
+        removeItem,
+        clearCart
+      }}
+    >
       {children}
     </CartContext.Provider>
   )

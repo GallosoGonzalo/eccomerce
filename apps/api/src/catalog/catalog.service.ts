@@ -57,6 +57,13 @@ export class CatalogService {
     });
   }
 
+  getProductBySlug(slug: string) {
+    return this.prisma.product.findUnique({
+      where: { slug },
+      include: { category: true }
+    });
+  }
+
   createProduct(data: any) {
     return this.prisma.product.create({
       data,

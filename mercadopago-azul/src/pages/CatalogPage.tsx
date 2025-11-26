@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { supabase, Product, Category } from '@/lib/supabase'
-import { ProductCard } from '@/components/ProductCard'
 import { Filter, X } from 'lucide-react'
+import { ProductCard } from '@/components/ProductCard'
+import { fetchCategories, fetchProducts } from '@/lib/api'
+import type { Category, Product } from '@/lib/types'
 
 export function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -24,56 +25,39 @@ export function CatalogPage() {
   }, [searchQuery, categorySlug, sortBy])
 
   const loadCategories = async () => {
-    const { data } = await supabase
-      .from('categories')
-      .select('*')
-      .order('name')
-
-    if (data) setCategories(data)
+    const data = await fetchCategories()
+    setCategories(data)
   }
 
   const loadProducts = async () => {
     try {
       setLoading(true)
-      let query = supabase
-        .from('products')
-        .select('*')
-
-      if (searchQuery) {
-        query = query.or(`name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`)
-      }
-
-      if (categorySlug) {
-        const { data: category } = await supabase
-          .from('categories')
-          .select('id')
-          .eq('slug', categorySlug)
-          .single()
-
-        if (category) {
-          query = query.eq('category_id', category.id)
-        }
-      }
-
-      // Ordenamiento
+      const sortParams: { sort?: string; order?: 'asc' | 'desc' } = {}
       switch (sortBy) {
         case 'price-asc':
-          query = query.order('price', { ascending: true })
+          sortParams.sort = 'price'
+          sortParams.order = 'asc'
           break
         case 'price-desc':
-          query = query.order('price', { ascending: false })
+          sortParams.sort = 'price'
+          sortParams.order = 'desc'
           break
         case 'name':
-          query = query.order('name', { ascending: true })
+          sortParams.sort = 'name'
+          sortParams.order = 'asc'
           break
         default:
-          query = query.order('created_at', { ascending: false })
+          sortParams.sort = 'createdAt'
+          sortParams.order = 'desc'
       }
 
-      const { data, error } = await query
+      const { items } = await fetchProducts({
+        search: searchQuery || undefined,
+        category: categorySlug || undefined,
+        ...sortParams
+      })
 
-      if (error) throw error
-      setProducts(data || [])
+      setProducts(items)
     } catch (error) {
       console.error('Error loading products:', error)
     } finally {

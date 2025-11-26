@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
-import { supabase } from '@/lib/supabase'
+import { createOrder } from '@/lib/api'
 import { CreditCard, Lock } from 'lucide-react'
 
 export function CheckoutPage() {
@@ -35,59 +35,9 @@ export function CheckoutPage() {
 
     try {
       setLoading(true)
-
-      // Crear dirección
-      const { data: addressData, error: addressError } = await supabase
-        .from('addresses')
-        .insert({
-          user_id: user.id,
-          full_name: formData.fullName,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          zip_code: formData.zipCode,
-          is_default: true,
-        })
-        .select()
-        .single()
-
-      if (addressError) throw addressError
-
-      // Crear orden
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user.id,
-          status: 'pending',
-          total,
-          subtotal: total,
-          shipping_cost: 0,
-          shipping_address_id: addressData.id,
-        })
-        .select()
-        .single()
-
-      if (orderError) throw orderError
-
-      // Crear items de la orden
-      const orderItems = items.map(item => ({
-        order_id: orderData.id,
-        product_id: item.product_id,
-        quantity: item.quantity,
-        price: item.price,
-      }))
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems)
-
-      if (itemsError) throw itemsError
-
-      // Limpiar carrito
+      await createOrder()
       await clearCart()
 
-      // Redirigir a confirmación
       alert('Compra realizada con éxito')
       navigate('/profile')
     } catch (error) {
@@ -278,10 +228,10 @@ export function CheckoutPage() {
                 {items.map(item => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span className="text-gray-600">
-                      {item.product?.name} x{item.quantity}
+                      {item.product.name} x{item.quantity}
                     </span>
                     <span className="font-semibold">
-                      ${(item.price * item.quantity).toLocaleString()}
+                      ${(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
