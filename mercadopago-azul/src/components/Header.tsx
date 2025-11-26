@@ -5,7 +5,7 @@ import { useCart } from '@/contexts/CartContext'
 import { useState } from 'react'
 
 export function Header() {
-  const { user, profile, signOut } = useAuth()
+  const { user, signOut } = useAuth()
   const { itemCount } = useCart()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -50,7 +50,7 @@ export function Header() {
               <div className="hidden md:flex items-center space-x-4">
                 <Link to="/profile" className="flex items-center space-x-2 hover:text-brand-primary">
                   <User className="w-5 h-5" />
-                  <span className="text-sm">{profile?.full_name || 'Mi cuenta'}</span>
+                  <span className="text-sm">{user.displayName || 'Mi cuenta'}</span>
                 </Link>
                 <button
                   onClick={() => signOut()}

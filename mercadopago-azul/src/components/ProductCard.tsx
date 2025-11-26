@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Product } from '@/lib/supabase'
 import { ShoppingCart } from 'lucide-react'
-import { useCart } from '@/contexts/CartContext'
 import { useState } from 'react'
+import { Product } from '@/lib/types'
+import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
   product: Product
@@ -28,10 +28,7 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   }
 
-  const hasDiscount = product.original_price && product.original_price > product.price
-  const discountPercent = hasDiscount
-    ? Math.round(((product.original_price! - product.price) / product.original_price!) * 100)
-    : 0
+  const image = product.images?.[0] ?? '/placeholder.jpg'
 
   return (
     <Link to={`/product/${product.slug}`} className="group">
@@ -39,15 +36,10 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Image */}
         <div className="relative aspect-square bg-gray-100">
           <img
-            src={product.image_url || '/placeholder.jpg'}
+            src={image}
             alt={product.name}
             className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform"
           />
-          {hasDiscount && (
-            <div className="absolute top-2 right-2 bg-success text-white px-2 py-1 rounded text-sm font-bold">
-              -{discountPercent}%
-            </div>
-          )}
         </div>
 
         {/* Content */}
@@ -60,11 +52,6 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-2xl font-bold text-gray-900">
               ${product.price.toLocaleString()}
             </span>
-            {hasDiscount && (
-              <span className="text-sm text-gray-500 line-through">
-                ${product.original_price!.toLocaleString()}
-              </span>
-            )}
           </div>
 
           {product.stock > 0 ? (

@@ -43,6 +43,11 @@ export class CatalogController {
     });
   }
 
+  @Get('products/slug/:slug')
+  productBySlug(@Param('slug') slug: string) {
+    return this.catalogService.getProductBySlug(slug);
+  }
+
   @Get('products/:id')
   product(@Param('id') id: string) {
     return this.catalogService.getProduct(id);

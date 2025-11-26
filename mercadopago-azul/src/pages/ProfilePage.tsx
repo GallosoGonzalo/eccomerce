@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '@/contexts/AuthContext'
-import { supabase, Order } from '@/lib/supabase'
 import { User, Package, MapPin } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { listOrders } from '@/lib/api'
+import type { Order } from '@/lib/types'
 
 export function ProfilePage() {
-  const { user, profile, loading: authLoading } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -15,14 +16,8 @@ export function ProfilePage() {
 
   const loadOrders = async () => {
     try {
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('user_id', user!.id)
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setOrders(data || [])
+      const data = await listOrders()
+      setOrders(data)
     } catch (error) {
       console.error('Error loading orders:', error)
     } finally {
@@ -80,15 +75,15 @@ export function ProfilePage() {
         {/* Profile Info */}
         <div className="lg:col-span-1">
           <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center">
-                <User className="w-8 h-8 text-brand-primary" />
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center">
+                  <User className="w-8 h-8 text-brand-primary" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-lg">{user.displayName}</h2>
+                  <p className="text-sm text-gray-600">{user.email}</p>
+                </div>
               </div>
-              <div>
-                <h2 className="font-bold text-lg">{profile?.full_name}</h2>
-                <p className="text-sm text-gray-600">{user.email}</p>
-              </div>
-            </div>
 
             <div className="space-y-3">
               <div className="flex items-start space-x-3 text-sm">
@@ -132,14 +127,14 @@ export function ProfilePage() {
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <p className="text-sm text-gray-600">
-                          Pedido #{order.id.slice(0, 8)}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {new Date(order.created_at).toLocaleDateString('es-ES', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
+                      <p className="text-sm text-gray-600">
+                        Pedido #{order.id.slice(0, 8)}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(order.createdAt).toLocaleDateString('es-ES', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
                           })}
                         </p>
                       </div>

@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Ensure Supabase references are gone
+        run: |
+          if rg "SUPABASE_" .; then
+            echo "Found forbidden SUPABASE_ references"
+            exit 1
+          fi
       - uses: pnpm/action-setup@v2
         with:
           version: 8

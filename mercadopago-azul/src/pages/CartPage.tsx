@@ -46,10 +46,10 @@ export function CartPage() {
               className="bg-white border border-gray-200 rounded-lg p-4 flex gap-4"
             >
               {/* Image */}
-              <Link to={`/product/${item.product?.slug}`} className="flex-shrink-0">
+              <Link to={`/product/${item.product.slug}`} className="flex-shrink-0">
                 <img
-                  src={item.product?.image_url || '/placeholder.jpg'}
-                  alt={item.product?.name}
+                  src={item.product.images?.[0] || '/placeholder.jpg'}
+                  alt={item.product.name}
                   className="w-24 h-24 object-contain bg-gray-100 rounded"
                 />
               </Link>
@@ -57,13 +57,13 @@ export function CartPage() {
               {/* Details */}
               <div className="flex-1 min-w-0">
                 <Link
-                  to={`/product/${item.product?.slug}`}
+                  to={`/product/${item.product.slug}`}
                   className="font-semibold text-gray-900 hover:text-brand-primary line-clamp-2"
                 >
-                  {item.product?.name}
+                  {item.product.name}
                 </Link>
                 <p className="text-2xl font-bold text-gray-900 mt-2">
-                  ${item.price.toLocaleString()}
+                  ${item.product.price.toLocaleString()}
                 </p>
 
                 {/* Quantity controls */}
@@ -79,7 +79,7 @@ export function CartPage() {
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center hover:bg-gray-300"
-                      disabled={item.quantity >= (item.product?.stock || 0)}
+                      disabled={item.quantity >= (item.product.stock || 0)}
                     >
                       <Plus className="w-4 h-4" />
                     </button>
@@ -98,7 +98,7 @@ export function CartPage() {
               {/* Subtotal */}
               <div className="text-right">
                 <p className="text-xl font-bold">
-                  ${(item.price * item.quantity).toLocaleString()}
+                  ${(item.product.price * item.quantity).toLocaleString()}
                 </p>
               </div>
             </div>

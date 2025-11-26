@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase, Product, Category } from '@/lib/supabase'
-import { ProductCard } from '@/components/ProductCard'
 import { ChevronRight, TrendingUp, Package, Shield, Truck } from 'lucide-react'
+import { ProductCard } from '@/components/ProductCard'
+import { fetchCategories, fetchProducts } from '@/lib/api'
+import type { Category, Product } from '@/lib/types'
 
 export function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
@@ -16,20 +17,12 @@ export function HomePage() {
   const loadData = async () => {
     try {
       const [productsRes, categoriesRes] = await Promise.all([
-        supabase
-          .from('products')
-          .select('*')
-          .eq('active', true)
-          .eq('featured', true)
-          .limit(8),
-        supabase
-          .from('categories')
-          .select('*')
-          .limit(6),
+        fetchProducts({ limit: 8, sort: 'createdAt', order: 'desc' }),
+        fetchCategories()
       ])
 
-      if (productsRes.data) setFeaturedProducts(productsRes.data)
-      if (categoriesRes.data) setCategories(categoriesRes.data)
+      setFeaturedProducts(productsRes.items)
+      setCategories(categoriesRes.slice(0, 6))
     } catch (error) {
       console.error('Error loading data:', error)
     } finally {
@@ -113,7 +106,7 @@ export function HomePage() {
                   to={`/catalog?category=${category.slug}`}
                   className="bg-white p-6 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all text-center"
                 >
-                  <div className="text-3xl mb-2">{category.image_url || '📦'}</div>
+                  <div className="text-3xl mb-2">📦</div>
                   <h3 className="font-semibold text-sm">{category.name}</h3>
                 </Link>
               ))}

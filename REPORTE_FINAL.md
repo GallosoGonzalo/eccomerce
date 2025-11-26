@@ -137,9 +137,9 @@ He creado dos funciones serverless listas para procesar pagos con Stripe:
 
 - `/workspace/docs/DOCUMENTACION_FINAL.md` - Documentación completa
 - `/workspace/mercadopago-azul/` - Código fuente frontend
-- `/workspace/supabase/` - Configuración backend
-- `/workspace/supabase/functions/create-payment-intent/` - Función de pago
-- `/workspace/supabase/functions/confirm-payment/` - Confirmación de pago
+- `/workspace/apps/api/` - API NestJS + Prisma
+- `/workspace/prisma/` - Esquema y seeds de base de datos
+- `.github/workflows/ci.yml` - Pipeline de validación
 
 ## 🎨 Diseño Visual
 
